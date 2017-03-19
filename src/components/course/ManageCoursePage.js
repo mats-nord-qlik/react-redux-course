@@ -5,7 +5,8 @@ import * as courseActions from '../../actions/courseActions';
 import CourseForm from './CourseForm';
 import toastr from 'toastr';
 
-class ManageCoursePage extends React.Component {
+// Named export of ManageCoursePage to test the connected component
+export class ManageCoursePage extends React.Component {
 	constructor( props, context ){
 		super( props, context );
 		this.state = {
@@ -35,8 +36,26 @@ updateCourseState( event ) {
 	return this.setState({ cours: course });
 }
 
+// Result of TDD when tested
+courseFormIsValid(){
+	let formIsValid = true;
+	let errors = {};
+	if ( this.state.course.title.length < 5 ) {
+		errors.title = 'Title must be at least 5 characters.';
+		formIsValid = false;
+	}
+	this.setState({ errors });
+	return formIsValid;
+}
+
 saveCourse( event ) {
 	event.preventDefault();
+
+	// Result of TDD
+	if ( !this.courseFormIsValid() ){
+		return;
+	}
+
 	this.setState({ saving: true });
 	this.props.actions.saveCourse( this.state.course )
 		.then(() => this.redirect()	)
