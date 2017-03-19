@@ -28,6 +28,9 @@ updateCourseState( event ) {
 saveCourse( event ) {
 	event.preventDefault();
 	this.props.actions.saveCourse( this.state.course );
+	// Push a new rout on the global context.router
+	// Changes the url to /courses after saving the new route, displays the list of routes
+	this.context.router.push('/courses');
 }
 
 
@@ -44,10 +47,6 @@ saveCourse( event ) {
   }
 }
 
-//Pull in the React Router context so router is available on this.context.router.
-ManageCoursePage.contextTypes = {
-  router: PropTypes.object
-};
 
 ManageCoursePage.propTypes = {
   course: PropTypes.object.isRequired,
@@ -55,6 +54,11 @@ ManageCoursePage.propTypes = {
 	actions: PropTypes.object.isRequired
 };
 
+//Pull in the React Router context so router is available on this.context.router.
+//MND: Make access to a global context..
+ManageCoursePage.contextTypes = {
+  router: PropTypes.object
+};
 
 function mapStateToProps(state, ownProps) {
 
