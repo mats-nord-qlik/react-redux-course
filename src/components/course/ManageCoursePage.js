@@ -9,7 +9,8 @@ class ManageCoursePage extends React.Component {
 		super( props, context );
 		this.state = {
 			course: Object.assign( {}, this.props.course ),
-			errors: {}
+			errors: {},
+			saving: false
 		};
 		// Try a shorte form
 		// this.updateCourseState.bind( this );
@@ -35,11 +36,14 @@ updateCourseState( event ) {
 
 saveCourse( event ) {
 	event.preventDefault();
-	this.props.actions.saveCourse( this.state.course ).then(() => this.redirect()	);
+	this.setState({ saving: true });
+	this.props.actions.saveCourse( this.state.course )
+		.then(() => this.redirect()	);
 }
 
 redirect(){
 	// Push a new rout on the global context.router
+		this.setState({ saving: false });
 	// Changes the url to /courses after saving the new route, displays the list of routes
 	this.context.router.push('/courses');
 }
@@ -53,6 +57,7 @@ redirect(){
 				onSave={this.saveCourse}
 				course={this.state.course}
 				errors={this.state.errors}
+				saving={this.state.saving}
 			/>
 		);
   }
