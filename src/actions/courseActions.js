@@ -1,5 +1,7 @@
 import * as types from './actionTypes';
 import courseApi from '../api/mockCoursApi';
+import {beginAjaxCall} from './ajaxStatusActions';
+
 // This is conviencen runction, requires a type in the return
 export function loadCourseSSuccess( courses ) {
 	// This only fires when it's successful, so the suffix is valid
@@ -14,11 +16,12 @@ export function updateCourseSuccess( course ) {
 	return { type: types.UPDATE_COURSE_SUCCESS, course };
 }
 
-// Put the tunk in the end of the file, or in a separate file
+// Put the thunk in the end of the file, or in a separate file
 export function loadCourses(){
-	return function(dispacth){
+	return function(dispatch){
+		dispatch(beginAjaxCall);
 		return courseApi.getAllCourses().then( courses => {
-			dispacth( loadCourseSSuccess( courses ));
+			dispatch( loadCourseSSuccess( courses ));
 		}).catch( error => {
 			throw( error );
 		});
@@ -27,6 +30,7 @@ export function loadCourses(){
 
 export function saveCourse(course) {
   return function (dispatch, getState) {
+	dispatch(beginAjaxCall);
     return courseApi.saveCourse(course).then(course => {
       course.id ? dispatch(updateCourseSuccess(course)) :
         dispatch(createCourseSuccess(course));
