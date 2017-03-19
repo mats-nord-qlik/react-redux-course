@@ -35,7 +35,10 @@ updateCourseState( event ) {
 
 saveCourse( event ) {
 	event.preventDefault();
-	this.props.actions.saveCourse( this.state.course );
+	this.props.actions.saveCourse( this.state.course ).then(() => this.redirect()	);
+}
+
+redirect(){
 	// Push a new rout on the global context.router
 	// Changes the url to /courses after saving the new route, displays the list of routes
 	this.context.router.push('/courses');
@@ -75,7 +78,6 @@ function getCourseById(courses, id){
 }
 
 function mapStateToProps(state, ownProps) {
-	//debugger;
 	const courseId = ownProps.params.id; // from the path '/course/:id
 	let course = { id: "", title: "", watchHref: "", authorId: "", length: "", category: "" };
 
@@ -83,7 +85,7 @@ function mapStateToProps(state, ownProps) {
 		course = getCourseById( state.courses, courseId );
 	}
 
-	const authorsFormattedForDropDown = state.authors.map( author => {
+const authorsFormattedForDropDown = state.authors.map( author => {
 		return{
 			value: author.id,
 			text: author.firstName + ' ' + author.lastName
