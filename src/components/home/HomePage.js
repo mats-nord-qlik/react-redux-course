@@ -7,8 +7,8 @@ class HomePage extends React.Component{
     render() {
         return (
             <div className="jumbotron">
-                <h1>Analytic spin</h1>
-                <p>The app store</p>
+                <h1>Analytic head</h1>
+                <p>A dog store</p>
                 <Link to="deltas" className="btn btn-primary btn-lg">Adaptive Distribution Spin</Link>
             </div>
         );

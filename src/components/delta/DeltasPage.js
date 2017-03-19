@@ -9,11 +9,7 @@ class DeltasPage extends React.Component {
 	constructor(props, context){
 		super(props, context);
 	}
-
-	deltaRow(delta, index){
-		return (<div key={index}>{delta.category}</div>);
-	}
-
+    
 	redirectToAddDeltaPage(){
 		browserHistory.push('/delta');
 	}
@@ -22,6 +18,10 @@ class DeltasPage extends React.Component {
         const {deltas} = this.props;
         return (
             <div className="jumbotron">
+                <input type="submit"
+					value="A Direct Share"
+					className="btn btn-primary"
+					onClick="" />
                 <h1>Delta</h1>
                <DeltaList deltas={deltas} />
             </div>
